@@ -1,0 +1,43 @@
+{
+  "eventName": "HACK DAYS",
+  "start": "2026-09-22T17:45:00.000Z",
+  "end": "2026-09-22T17:50:00.000Z",
+  "milestones": [
+    {
+      "id": "m1",
+      "name": "Judge round",
+      "type": "offset",
+      "minutesAfterStart": 2,
+      "exactAt": null,
+      "warnMinutes": 1,
+      "message": "Prepare your final submission."
+    },
+    {
+      "id": "m2",
+      "name": "Final submission",
+      "type": "offset",
+      "minutesAfterStart": 3,
+      "exactAt": null,
+      "warnMinutes": 0,
+      "message": "Upload your final build."
+    },
+    {
+      "id": "5e643930-9a35-4bee-85bf-5edd55ceccd4",
+      "name": "New milestone",
+      "type": "offset",
+      "minutesAfterStart": 5,
+      "exactAt": null,
+      "warnMinutes": 1,
+      "message": ""
+    }
+  ],
+  "announcements": [
+    {
+      "id": "a1",
+      "text": "Welcome to the arena — check your team station.",
+      "showFrom": "2026-09-22T17:41:00.000Z",
+      "showUntil": "2026-09-22T17:45:00.000Z"
+    }
+  ],
+  "updatedAt": "2026-09-22T17:39:30.975Z"
+}
