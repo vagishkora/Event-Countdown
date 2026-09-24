@@ -1,1052 +1,813 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@500;600;700;800&display=swap');
-
-/* =========================================================
-   CYBER PULSE COUNTDOWN THEME
-   ========================================================= */
-
-:root {
-  font-family: Inter, system-ui, sans-serif;
-  color: #F8FAFC;
-  background: #050816;
-  color-scheme: dark;
-}
+/* =========================================
+   EVENT COUNTDOWN
+   ========================================= */
 
 * {
   box-sizing: border-box;
 }
 
 html,
-body,
-#app {
+body {
   margin: 0;
+  padding: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #070815;
+  color: #ffffff;
 }
 
 body {
-  background: #050816;
-  transition:
-    background 2s ease,
-    filter 1s ease;
+  position: relative;
 }
 
-/* =========================================================
-   BACKGROUND
-   ========================================================= */
 
-.backdrop,
-.video-fallback,
-#particles,
-.vignette {
-  position: fixed;
-  inset: 0;
+/* =========================================
+   IMPORTANT: HIDDEN ELEMENTS
+   ========================================= */
+
+.hidden {
+  display: none !important;
+}
+
+
+/* =========================================
+   APP
+   ========================================= */
+
+#app {
+  position: relative;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #070815;
 }
+
+
+/* =========================================
+   VIDEO BACKGROUND
+   ========================================= */
 
 .backdrop {
+  position: fixed;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
   object-fit: cover;
-  z-index: -4;
-  opacity: 0.42;
-  transition:
-    opacity 2s ease,
-    filter 2s ease;
+
+  opacity: 0.48;
+
+  z-index: 0;
+
+  pointer-events: none;
+
+  transition: opacity 0.7s ease;
 }
 
 .video-fallback {
-  z-index: -5;
+  position: fixed;
+  inset: 0;
 
   background:
     radial-gradient(
-      circle at 50% 35%,
-      rgba(0, 229, 255, 0.18),
-      transparent 35%
+      circle at 50% 40%,
+      rgba(80, 80, 180, 0.20),
+      transparent 45%
     ),
-    radial-gradient(
-      circle at 20% 80%,
-      rgba(124, 58, 237, 0.18),
-      transparent 35%
-    ),
-    linear-gradient(
-      135deg,
-      #050816,
-      #0B1230 45%,
-      #050816
-    );
+    #070815;
+
+  z-index: -1;
 }
 
+
+/* =========================================
+   PARTICLES
+   ========================================= */
+
 #particles {
-  z-index: -2;
+  position: fixed;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 1;
+
   pointer-events: none;
 }
 
+
+/* =========================================
+   VIGNETTE
+   ========================================= */
+
 .vignette {
-  z-index: -1;
+  position: fixed;
+  inset: 0;
+
+  z-index: 2;
+
+  pointer-events: none;
 
   background:
     radial-gradient(
       circle at center,
       transparent 20%,
-      rgba(5, 8, 22, 0.25) 55%,
-      rgba(0, 0, 0, 0.9) 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.3),
-      transparent 40%,
-      rgba(0, 0, 0, 0.7)
+      rgba(0, 0, 0, 0.15) 55%,
+      rgba(0, 0, 0, 0.75) 100%
     );
-
-  pointer-events: none;
 }
 
-/* =========================================================
+
+/* =========================================
    MAIN STAGE
-   ========================================================= */
+   ========================================= */
 
 .stage {
-  min-height: 100%;
-  padding: clamp(18px, 3vw, 44px);
   position: relative;
+
+  z-index: 5;
+
+  width: 100%;
+  height: 100%;
+
+  padding: 30px 45px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
 }
 
-/* =========================================================
+
+/* =========================================
    TOP BAR
-   ========================================================= */
+   ========================================= */
 
 .topbar {
+  width: 100%;
+
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  position: relative;
-  z-index: 5;
 }
 
 .eyebrow {
-  font-size: clamp(13px, 1.3vw, 18px);
-  font-weight: 800;
+  font-size: 14px;
+
+  font-weight: 700;
+
   letter-spacing: 0.28em;
-  opacity: 0.85;
+
+  text-transform: uppercase;
+
+  opacity: 0.7;
 }
 
 .status {
-  margin-top: 8px;
+  margin-top: 7px;
+
   font-size: 11px;
-  letter-spacing: 0.18em;
-  opacity: 0.6;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+
+  opacity: 0.55;
 }
 
 .live {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
   font-size: 12px;
-  letter-spacing: 0.2em;
-  font-weight: 800;
+
+  font-weight: 700;
+
+  letter-spacing: 0.18em;
+
+  opacity: 0.8;
 }
 
 .live i {
-  display: inline-block;
+  display: block;
+
   width: 8px;
   height: 8px;
+
   border-radius: 50%;
-  background: #FF1744;
+
+  background: #ff315a;
+
   box-shadow:
-    0 0 8px #FF1744,
-    0 0 20px #FF1744;
-  margin-right: 8px;
-  animation: blink 1s infinite;
+    0 0 12px rgba(255, 49, 90, 0.9);
 }
 
-/* =========================================================
-   HERO / COUNTDOWN
-   ========================================================= */
+
+/* =========================================
+   HERO
+   ========================================= */
 
 .hero {
-  position: absolute;
-  inset: 13vh 6vw auto;
+  width: 100%;
+
+  margin-top: auto;
+  margin-bottom: auto;
+
   text-align: center;
-  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
 }
 
 .phase-label {
-  font-weight: 800;
-  letter-spacing: 0.35em;
-  font-size: clamp(12px, 1.2vw, 18px);
-  opacity: 0.9;
+  font-size: 14px;
 
-  text-shadow:
-    0 0 15px currentColor;
+  font-weight: 700;
+
+  letter-spacing: 0.32em;
+
+  text-transform: uppercase;
+
+  opacity: 0.8;
+
+  margin-bottom: 15px;
 }
 
-.hero h1 {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(96px, 20vw, 330px);
-  line-height: 0.82;
-  margin: 26px 0 18px;
-  font-weight: 900;
-  letter-spacing: 0.015em;
-  color: #00E5FF;
+#timer {
+  margin: 0;
+
+  font-size: clamp(70px, 13vw, 180px);
+
+  line-height: 0.95;
+
+  font-weight: 800;
+
+  letter-spacing: -0.06em;
+
+  font-variant-numeric: tabular-nums;
 
   text-shadow:
-    0 0 15px currentColor,
-    0 0 35px currentColor,
-    0 0 80px currentColor;
-
-  transition:
-    transform 0.16s ease,
-    color 1.2s ease,
-    text-shadow 1.2s ease;
+    0 0 30px rgba(255, 255, 255, 0.08);
 }
 
 .timer-sub {
-  font-size: clamp(14px, 1.6vw, 22px);
-  letter-spacing: 0.12em;
+  margin-top: 18px;
+
+  font-size: 14px;
+
+  letter-spacing: 0.2em;
+
   text-transform: uppercase;
-  opacity: 0.75;
+
+  opacity: 0.55;
 }
 
-/* =========================================================
+
+/* =========================================
    PROGRESS BAR
-   ========================================================= */
+   ========================================= */
 
 .progress {
-  height: 7px;
-  max-width: 900px;
-  margin: 35px auto 0;
-  border-radius: 99px;
-  background: rgba(255, 255, 255, 0.1);
+  width: min(650px, 75%);
+
+  height: 5px;
+
+  margin-top: 30px;
+
+  border-radius: 20px;
+
   overflow: hidden;
 
-  box-shadow:
-    0 0 20px rgba(0, 229, 255, 0.12);
+  background: rgba(255, 255, 255, 0.10);
 }
 
-.progress div {
-  height: 100%;
+#progressBar {
   width: 100%;
-  transform-origin: left;
+  height: 100%;
+
+  transform-origin: left center;
+
+  transform: scaleX(0);
+
+  border-radius: inherit;
+
+  background: #ffffff;
 
   transition:
-    transform 0.3s linear,
-    background 1s ease;
-
-  background: linear-gradient(
-    90deg,
-    #00E5FF,
-    #7C3AED,
-    #FF8A00,
-    #FF1744
-  );
-
-  box-shadow:
-    0 0 10px #00E5FF,
-    0 0 25px rgba(0, 229, 255, 0.5);
+    transform 0.5s linear;
 }
 
-/* =========================================================
-   SCHEDULE / MILESTONES
-   ========================================================= */
+
+/* =========================================
+   ALERT
+   ========================================= */
+
+.alert {
+  width: min(650px, 90%);
+
+  margin: 0 auto 25px;
+
+  padding: 18px 22px;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  border-radius: 14px;
+
+  background: rgba(10, 10, 25, 0.65);
+
+  backdrop-filter: blur(15px);
+
+  -webkit-backdrop-filter: blur(15px);
+
+  text-align: center;
+
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.alert-kicker {
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.2em;
+
+  opacity: 0.55;
+
+  text-transform: uppercase;
+}
+
+.alert-title {
+  margin-top: 5px;
+
+  font-size: 18px;
+
+  font-weight: 700;
+}
+
+.alert-count {
+  margin-top: 4px;
+
+  font-size: 30px;
+
+  font-weight: 800;
+
+  font-variant-numeric: tabular-nums;
+}
+
+.alert-message {
+  margin-top: 5px;
+
+  font-size: 12px;
+
+  opacity: 0.65;
+}
+
+
+/* =========================================
+   SCHEDULE
+   ========================================= */
 
 .schedule {
   position: absolute;
-  right: clamp(18px, 3vw, 44px);
-  bottom: clamp(18px, 3vw, 44px);
 
-  width: min(390px, 34vw);
+  right: 35px;
+  bottom: 30px;
 
-  padding: 18px 20px;
+  width: 320px;
 
-  border: 1px solid rgba(0, 229, 255, 0.18);
-  border-radius: 18px;
+  max-height: 42vh;
 
-  background: rgba(5, 8, 22, 0.5);
-  backdrop-filter: blur(18px);
+  overflow-y: auto;
 
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.35),
-    inset 0 0 30px rgba(0, 229, 255, 0.03);
+  padding: 15px;
 
-  z-index: 4;
+  border-radius: 16px;
+
+  background: rgba(8, 8, 20, 0.55);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(15px);
+
+  -webkit-backdrop-filter: blur(15px);
+
+  scrollbar-width: thin;
 }
 
 .schedule-title {
-  font-size: 10px;
-  letter-spacing: 0.25em;
-  opacity: 0.55;
   margin-bottom: 12px;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.22em;
+
+  opacity: 0.5;
 }
 
-/* Every milestone */
+
+/* =========================================
+   SCHEDULE ITEM
+   ========================================= */
 
 .item {
+  position: relative;
+
   display: flex;
+
   gap: 10px;
 
-  padding: 10px 0;
+  padding: 11px 4px;
 
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-
-  align-items: flex-start;
-
-  transition:
-    background 0.3s ease,
-    transform 0.3s ease,
-    opacity 0.3s ease;
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.06);
 }
 
-.item:first-child {
-  border-top: 0;
+.item:last-child {
+  border-bottom: none;
 }
 
-/* Milestone dot */
+.milestone-left {
+  width: 12px;
+
+  padding-top: 5px;
+
+  flex-shrink: 0;
+}
 
 .dot {
-  width: 8px;
-  height: 8px;
+  display: block;
 
-  margin-top: 5px;
+  width: 7px;
+  height: 7px;
 
   border-radius: 50%;
 
-  background: #00E5FF;
-
-  opacity: 0.4;
-
-  flex: none;
+  background: rgba(255, 255, 255, 0.3);
 }
-
-/* Milestone content */
 
 .milestone-content {
   flex: 1;
+
   min-width: 0;
 }
 
 .milestone-top {
   display: flex;
+
   justify-content: space-between;
-  align-items: center;
 
   gap: 10px;
 }
 
 .item-name {
   font-size: 13px;
-  font-weight: 700;
-}
 
-.item-time {
-  margin-left: auto;
-  font-size: 10px;
-  opacity: 0.55;
+  font-weight: 700;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
   white-space: nowrap;
 }
 
-/* Description / extra message */
-
-.milestone-description {
+.item-time {
   font-size: 11px;
-  line-height: 1.35;
 
-  margin-top: 3px;
+  opacity: 0.5;
 
-  opacity: 0.7;
-
-  overflow-wrap: anywhere;
+  white-space: nowrap;
 }
 
-/* Status */
+.milestone-description {
+  margin-top: 4px;
+
+  font-size: 10px;
+
+  line-height: 1.4;
+
+  opacity: 0.5;
+}
 
 .milestone-status {
-  display: inline-block;
-
   margin-top: 5px;
 
   font-size: 9px;
-  font-weight: 800;
+
+  font-weight: 700;
 
   letter-spacing: 0.12em;
 }
 
-/* =========================================================
-   NEXT MILESTONE
-   ========================================================= */
 
-.item.next {
-  background: rgba(0, 229, 255, 0.08);
-
-  border-radius: 12px;
-
-  padding: 12px;
-
-  border: 1px solid rgba(0, 229, 255, 0.15);
-
-  box-shadow:
-    0 0 20px rgba(0, 229, 255, 0.06);
-}
-
-.item.next .dot {
-  opacity: 1;
-
-  background: #00E5FF;
-
-  box-shadow:
-    0 0 8px #00E5FF,
-    0 0 18px #00E5FF;
-
-  animation: dotPulse 1.2s infinite;
-}
-
-.milestone-status.next {
-  color: #00E5FF;
-}
-
-/* =========================================================
-   LIVE MILESTONE
-   ========================================================= */
-
-.item.live {
-  background: rgba(255, 23, 68, 0.10);
-
-  border-radius: 12px;
-
-  padding: 12px;
-
-  border: 1px solid rgba(255, 23, 68, 0.35);
-
-  box-shadow:
-    0 0 20px rgba(255, 23, 68, 0.10);
-}
+/* =========================================
+   SCHEDULE STATES
+   ========================================= */
 
 .item.live .dot {
-  opacity: 1;
-
-  background: #FF1744;
-
   box-shadow:
-    0 0 8px #FF1744,
-    0 0 18px #FF1744;
-
-  animation: liveDot 0.8s infinite;
+    0 0 10px rgba(255, 255, 255, 0.9);
 }
 
-.item.live .item-name {
-  color: #FFFFFF;
+.item.live .milestone-status {
+  opacity: 1;
 }
-
-.milestone-status.live {
-  color: #FF1744;
-
-  animation: liveText 1s infinite;
-}
-
-/* =========================================================
-   UPCOMING MILESTONES
-   ========================================================= */
-
-.item.upcoming {
-  opacity: 0.75;
-}
-
-.milestone-status.upcoming {
-  color: #F8FAFC;
-  opacity: 0.5;
-}
-
-/* =========================================================
-   DONE MILESTONES
-   ========================================================= */
 
 .item.done {
   opacity: 0.35;
 }
 
-.item.done .item-name {
-  text-decoration: line-through;
+.item.next {
+  opacity: 1;
 }
 
-.item.done .milestone-description {
-  text-decoration: line-through;
+.item.upcoming {
+  opacity: 0.65;
 }
 
-.milestone-status.done {
-  opacity: 0.6;
-}
 
-/* =========================================================
-   ALERT
-   ========================================================= */
-
-.alert {
-  position: absolute;
-  left: 50%;
-  top: 5.5%;
-
-  transform: translateX(-50%);
-
-  width: min(760px, 88vw);
-
-  padding: 16px 24px;
-
-  text-align: center;
-
-  border: 1px solid rgba(0, 229, 255, 0.4);
-
-  border-radius: 18px;
-
-  background: rgba(5, 20, 35, 0.75);
-
-  backdrop-filter: blur(18px);
-
-  box-shadow:
-    0 0 40px rgba(0, 229, 255, 0.15);
-
-  animation: alertIn 0.5s ease;
-
-  z-index: 8;
-}
-
-.alert-kicker {
-  font-size: 10px;
-  letter-spacing: 0.3em;
-  color: #00E5FF;
-}
-
-.alert-title {
-  font-size: clamp(20px, 3vw, 34px);
-  font-weight: 900;
-  margin-top: 3px;
-}
-
-.alert-count {
-  font-family: 'Barlow Condensed';
-  font-size: clamp(30px, 4vw, 52px);
-  font-weight: 900;
-  color: #00E5FF;
-
-  text-shadow:
-    0 0 15px #00E5FF,
-    0 0 30px rgba(0, 229, 255, 0.5);
-}
-
-.alert-message {
-  font-size: 12px;
-  opacity: 0.75;
-}
-
-/* =========================================================
+/* =========================================
    ANNOUNCEMENT
-   ========================================================= */
+   ========================================= */
 
 .announcement {
   position: absolute;
 
-  left: 50%;
-  bottom: 5%;
+  left: 35px;
+  bottom: 30px;
 
-  transform: translateX(-50%);
+  max-width: 45%;
 
-  padding: 11px 18px;
+  padding: 13px 18px;
 
-  border-radius: 99px;
+  border-radius: 12px;
 
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(8, 8, 20, 0.65);
 
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border:
+    1px solid rgba(255, 255, 255, 0.10);
 
   backdrop-filter: blur(12px);
 
-  font-size: 13px;
+  -webkit-backdrop-filter: blur(12px);
 
-  letter-spacing: 0.04em;
+  font-size: 12px;
 
-  z-index: 5;
+  line-height: 1.4;
 }
 
-.hidden {
-  display: none !important;
-}
 
-/* =========================================================
-   BEFORE EVENT
-   ========================================================= */
-
-body.phase-before {
-  background:
-    radial-gradient(
-      circle at 50% 35%,
-      rgba(0, 229, 255, 0.14),
-      transparent 40%
-    ),
-    #050816;
-}
-
-.phase-before .hero h1 {
-  color: #F8FAFC;
-
-  text-shadow:
-    0 0 20px #00E5FF,
-    0 0 60px rgba(0, 229, 255, 0.5);
-}
-
-/* =========================================================
-   100% → 50%
-   CYAN
-   ========================================================= */
-
-body.phase-fresh {
-  background:
-    radial-gradient(
-      circle at 50% 40%,
-      rgba(0, 229, 255, 0.18),
-      transparent 42%
-    ),
-    linear-gradient(
-      135deg,
-      #050816,
-      #071B2A
-    );
-}
-
-.phase-fresh .hero h1 {
-  color: #00E5FF;
-
-  text-shadow:
-    0 0 15px #00E5FF,
-    0 0 40px #00E5FF,
-    0 0 100px rgba(0, 229, 255, 0.6);
-}
-
-/* =========================================================
-   50% → 25%
-   VIOLET
-   ========================================================= */
-
-body.phase-warm {
-  background:
-    radial-gradient(
-      circle at 50% 40%,
-      rgba(124, 58, 237, 0.25),
-      transparent 42%
-    ),
-    linear-gradient(
-      135deg,
-      #08051A,
-      #160B2E
-    );
-}
-
-.phase-warm .hero h1 {
-  color: #7C3AED;
-
-  text-shadow:
-    0 0 15px #7C3AED,
-    0 0 40px #7C3AED,
-    0 0 100px rgba(124, 58, 237, 0.65);
-}
-
-.phase-warm .progress div {
-  background: linear-gradient(
-    90deg,
-    #00E5FF,
-    #7C3AED
-  );
-}
-
-/* =========================================================
-   25% → 10%
-   ORANGE
-   ========================================================= */
-
-body.phase-intense {
-  background:
-    radial-gradient(
-      circle at 50% 40%,
-      rgba(255, 138, 0, 0.22),
-      transparent 42%
-    ),
-    linear-gradient(
-      135deg,
-      #170A03,
-      #2A1004
-    );
-}
-
-.phase-intense .hero h1 {
-  color: #FF8A00;
-
-  text-shadow:
-    0 0 15px #FF8A00,
-    0 0 40px #FF8A00,
-    0 0 100px rgba(255, 138, 0, 0.65);
-}
-
-.phase-intense .progress div {
-  background: linear-gradient(
-    90deg,
-    #7C3AED,
-    #FF8A00
-  );
-}
-
-/* =========================================================
-   LAST 10 MINUTES
-   RED
-   ========================================================= */
-
-body.phase-urgent {
-  background:
-    radial-gradient(
-      circle at 50% 40%,
-      rgba(255, 23, 68, 0.25),
-      transparent 42%
-    ),
-    linear-gradient(
-      135deg,
-      #180208,
-      #30040C
-    );
-}
-
-.phase-urgent .hero h1 {
-  color: #FF1744;
-
-  text-shadow:
-    0 0 15px #FF1744,
-    0 0 40px #FF1744,
-    0 0 100px rgba(255, 23, 68, 0.7);
-
-  animation: shake 0.95s infinite;
-}
-
-.phase-urgent .vignette {
-  box-shadow:
-    inset 0 0 100px rgba(255, 23, 68, 0.7);
-
-  animation: edgePulse 1s infinite;
-}
-
-.phase-urgent .progress div {
-  background: linear-gradient(
-    90deg,
-    #FF8A00,
-    #FF1744
-  );
-}
-
-/* =========================================================
-   FINAL 60 SECONDS
-   ========================================================= */
-
-body.phase-finale {
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(255, 23, 68, 0.3),
-      transparent 45%
-    ),
-    #080006;
-}
-
-.phase-finale .hero h1 {
-  font-size: clamp(150px, 34vw, 520px);
-
-  color: #F8FAFC;
-
-  text-shadow:
-    0 0 15px #FF1744,
-    0 0 35px #FF1744,
-    0 0 80px #FF1744,
-    0 0 140px rgba(255, 23, 68, 0.8);
-
-  animation:
-    finalePop 0.9s ease infinite;
-}
-
-.phase-finale .schedule,
-.phase-finale .topbar {
-  opacity: 0.18;
-}
-
-.phase-finale .vignette {
-  background:
-    radial-gradient(
-      circle,
-      transparent 15%,
-      rgba(255, 23, 68, 0.18) 55%,
-      rgba(60, 0, 10, 0.92)
-    );
-
-  animation:
-    strobe 1s steps(2, end) infinite;
-}
-
-.phase-finale .progress div {
-  background: #FF1744;
-
-  box-shadow:
-    0 0 15px #FF1744,
-    0 0 40px #FF1744;
-}
-
-/* =========================================================
-   ENDED
-   ========================================================= */
+/* =========================================
+   EVENT ENDED OVERLAY
+   ========================================= */
 
 .ended {
   position: fixed;
 
   inset: 0;
 
-  z-index: 10;
+  z-index: 100;
 
-  display: grid;
+  display: flex;
 
-  place-items: center;
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
 
   text-align: center;
 
   background:
     radial-gradient(
       circle at center,
-      rgba(124, 58, 237, 0.35),
-      transparent 40%
-    ),
-    radial-gradient(
-      circle at 50% 50%,
-      #17103A,
-      #050816 65%,
-      #020207
+      rgba(40, 40, 90, 0.45),
+      rgba(5, 5, 15, 0.96) 70%
     );
 
-  animation: fadeIn 1s ease;
+  pointer-events: none;
 }
 
 .ended-kicker {
-  font-size: 12px;
-  letter-spacing: 0.4em;
+  font-size: 13px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.3em;
+
   opacity: 0.65;
 }
 
 .ended-title {
-  font-family: 'Barlow Condensed';
-  font-size: clamp(100px, 22vw, 360px);
+  margin-top: 15px;
+
+  font-size: clamp(55px, 11vw, 150px);
+
+  line-height: 0.9;
+
   font-weight: 900;
-  line-height: 0.8;
-  color: #F8FAFC;
+
+  letter-spacing: -0.05em;
 
   text-shadow:
-    0 0 30px #7C3AED,
-    0 0 70px #7C3AED,
-    0 0 120px rgba(124, 58, 237, 0.8);
+    0 0 40px rgba(255, 255, 255, 0.12);
 }
 
 .ended-sub {
-  margin-top: 30px;
-  letter-spacing: 0.2em;
-  opacity: 0.7;
+  margin-top: 20px;
+
+  font-size: 14px;
+
+  letter-spacing: 0.18em;
+
+  text-transform: uppercase;
+
+  opacity: 0.6;
 }
+
+
+/* =========================================
+   BURST
+   ========================================= */
 
 .burst {
   position: absolute;
 
-  width: 20px;
-  height: 20px;
+  width: 400px;
+  height: 400px;
 
   border-radius: 50%;
 
-  box-shadow:
-    0 0 0 20px rgba(255, 255, 255, 0.05),
-    0 0 120px 70px rgba(124, 58, 237, 0.3);
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.08),
+      transparent 65%
+    );
 
-  animation: burst 3s infinite;
+  pointer-events: none;
 }
 
-/* =========================================================
+
+/* =========================================
+   PHASE EFFECTS
+   ========================================= */
+
+.phase-before #progressBar {
+  transform: scaleX(0);
+}
+
+.phase-fresh #progressBar {
+  opacity: 0.8;
+}
+
+.phase-warm #progressBar {
+  opacity: 0.9;
+}
+
+.phase-intense #timer {
+  animation: timerPulse 2s ease-in-out infinite;
+}
+
+.phase-urgent #timer {
+  animation: timerPulse 1s ease-in-out infinite;
+}
+
+.phase-finale #timer {
+  animation: timerPulse 0.6s ease-in-out infinite;
+}
+
+
+/* =========================================
    ANIMATIONS
-   ========================================================= */
+   ========================================= */
 
-@keyframes blink {
-  50% {
-    opacity: 0.2;
-  }
-}
+@keyframes timerPulse {
 
-@keyframes dotPulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.6);
-  }
-}
-
-@keyframes liveDot {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  50% {
-    transform: scale(1.5);
-    opacity: 0.5;
-  }
-}
-
-@keyframes liveText {
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.5;
-  }
-}
-
-@keyframes alertIn {
-  from {
-    opacity: 0;
-
-    transform:
-      translate(-50%, -20px)
-      scale(0.97);
-  }
-
-  to {
-    opacity: 1;
-
-    transform:
-      translate(-50%, 0)
-      scale(1);
-  }
-}
-
-@keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-
-  25% {
-    transform: translateX(-2px);
-  }
-
-  50% {
-    transform: translateX(2px);
-  }
-
-  75% {
-    transform: translateX(-1px);
-  }
-}
-
-@keyframes finalePop {
   0% {
-    transform: scale(0.92);
-    opacity: 0.7;
+    transform: scale(1);
   }
 
-  35% {
-    transform: scale(1.05);
-    opacity: 1;
-  }
-
-  70% {
-    transform: scale(0.98);
+  50% {
+    transform: scale(1.015);
   }
 
   100% {
     transform: scale(1);
-    opacity: 1;
   }
+
 }
 
-@keyframes edgePulse {
-  0%,
-  100% {
-    filter: brightness(1);
-  }
 
-  50% {
-    filter: brightness(1.3);
-  }
-}
-
-@keyframes strobe {
-  50% {
-    opacity: 0.78;
-  }
-}
-
-@keyframes burst {
-  50% {
-    transform: scale(14);
-    opacity: 0.1;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-/* =========================================================
+/* =========================================
    REDUCED MOTION
-   ========================================================= */
+   ========================================= */
 
 .reduce-motion *,
 .reduce-motion *::before,
 .reduce-motion *::after {
   animation: none !important;
+
   transition: none !important;
 }
 
-/* =========================================================
+
+/* =========================================
    MOBILE
-   ========================================================= */
+   ========================================= */
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
 
-  .hero {
-    inset: 16vh 4vw auto;
+  .stage {
+    padding: 22px;
   }
 
-  .hero h1 {
-    font-size: clamp(
-      72px,
-      22vw,
-      180px
-    );
+  #timer {
+    font-size: clamp(55px, 15vw, 110px);
   }
 
   .schedule {
-    left: 18px;
-    right: 18px;
-    bottom: 18px;
-    width: auto;
+    position: relative;
+
+    right: auto;
+    bottom: auto;
+
+    width: 100%;
+
+    max-height: 25vh;
+
+    margin-top: 15px;
   }
 
   .announcement {
-    bottom: 28%;
+    position: relative;
+
+    left: auto;
+    bottom: auto;
+
+    max-width: 100%;
+
+    margin-top: 10px;
+  }
+
+  .hero {
+    margin-top: 50px;
+    margin-bottom: 20px;
+  }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 550px) {
+
+  .stage {
+    padding: 18px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+  }
+
+  .status {
+    font-size: 9px;
+  }
+
+  .live {
+    font-size: 9px;
+  }
+
+  .phase-label {
+    font-size: 10px;
+  }
+
+  .timer-sub {
+    font-size: 10px;
+  }
+
+  .schedule {
+    padding: 12px;
   }
 
   .alert {
-    top: 9%;
+    width: 95%;
   }
 
-  .phase-finale .hero h1 {
-    font-size: clamp(
-      110px,
-      32vw,
-      260px
-    );
-  }
 }
