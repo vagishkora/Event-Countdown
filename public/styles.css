@@ -575,36 +575,36 @@ body {
    EVENT ENDED OVERLAY
    ========================================= */
 
+/* =========================================
+   EVENT ENDED OVERLAY
+   ========================================= */
+
 .ended {
   position: fixed;
-
   inset: 0;
 
-  z-index: 100;
+  z-index: 1000;
 
   display: flex;
-
   flex-direction: column;
-
   justify-content: center;
-
   align-items: center;
 
   text-align: center;
 
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(40, 40, 90, 0.45),
-      rgba(5, 5, 15, 0.96) 70%
-    );
+  /* SOLID BACKGROUND - hides countdown behind it */
+  background: #070815;
 
   pointer-events: none;
+
+  overflow: hidden;
 }
 
 .ended-kicker {
-  font-size: 13px;
+  position: relative;
+  z-index: 2;
 
+  font-size: 13px;
   font-weight: 700;
 
   letter-spacing: 0.3em;
@@ -613,6 +613,9 @@ body {
 }
 
 .ended-title {
+  position: relative;
+  z-index: 2;
+
   margin-top: 15px;
 
   font-size: clamp(55px, 11vw, 150px);
@@ -628,6 +631,9 @@ body {
 }
 
 .ended-sub {
+  position: relative;
+  z-index: 2;
+
   margin-top: 20px;
 
   font-size: 14px;
@@ -639,6 +645,25 @@ body {
   opacity: 0.6;
 }
 
+.burst {
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.08),
+      transparent 65%
+    );
+
+  pointer-events: none;
+
+  z-index: 1;
+}
 
 /* =========================================
    BURST
