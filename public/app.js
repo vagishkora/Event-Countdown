@@ -6,8 +6,56 @@ function now(){return sync.serverAt+(performance.now()-sync.perfAt)}
 function fmt(ms){ms=Math.max(0,ms);let sec=Math.floor(ms/1000);const h=Math.floor(sec/3600);sec%=3600;const m=Math.floor(sec/60);sec%=60;return [h,m,sec].map(x=>String(x).padStart(2,'0')).join(':')}
 function milestoneAt(m){return m.type==='offset'?Date.parse(schedule.start)+Number(m.minutesAfterStart)*60000:Date.parse(m.exactAt)}
 function phaseLabel(p){return ({before:'GET READY',fresh:'FULL POWER',warm:'HEAT RISING',intense:'FINAL PUSH',urgent:'CRITICAL',finale:'THE FINAL 60',ended:'CELEBRATION'})[p]}
+function renderSchedule(t) {
+  const items = schedule.milestones
+    .map(m => ({ ...m, at: milestoneAt(m) }))
+    .sort((a, b) => a.at - b.at);
+
+  let nextFound = false;
+
+  $('scheduleList').innerHTML = items.map(m => {
+    const done = t >= m.at + 120000;
+
+    const isNext =
+      !done &&
+      !nextFound &&
+      t < m.at;
+
+    if (isNext) nextFound = true;
+
+    let status = '';
+
+    if (done) {
+      status = 'DONE';
+    } else if (isNext) {
+      status = 'NEXT';
+    } else {
+      status = new Date(m.at).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    return `
+      <div class="item ${done ? 'done' : ''} ${isNext ? 'next' : ''}">
+        <span class="dot"></span>
+
+        <span class="item-name">
+          ${esc(m.name)}
+        </span>
+
+        <span class="item-time">
+          ${status}
+        </span>
+      </div>
+    `;
+  }).join('') || `
+    <div class="item">
+      <span class="item-name">No milestones yet</span>
+    </div>
+  `;
+}
 function setVideo(p){if(reduce||!window.VIDEO_CONFIG)return;const src=window.VIDEO_CONFIG[p];if(!src||src===videoSrc)return;const old=video.currentSrc;videoSrc=src;video.src=src;video.play().catch(()=>{});video.style.opacity='.12';setTimeout(()=>video.style.opacity='.48',700);if(old){} }
-function renderSchedule(t){const items=schedule.milestones.map(m=>({...m,at:milestoneAt(m)})).sort((a,b)=>a.at-b.at);let next=false; $('scheduleList').innerHTML=items.map(m=>{const done=t>=m.at+120000;const isNext=!done&&!next&&(t<m.at||t>=m.at- m.warnMinutes*60000);if(isNext)next=true;return `<div class="item ${done?'done':''} ${isNext?'next':''}"><span class="dot"></span><span class="item-name">${esc(m.name)}</span><span class="item-time">${done?'DONE':new Date(m.at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</span></div>`}).join('')||'<div class="item"><span class="item-name">No milestones yet</span></div>';}
 function esc(s){const d=document.createElement('div');d.textContent=s??'';return d.innerHTML}
 function renderAlert(t){const active=schedule.milestones.map(m=>({...m,at:milestoneAt(m)})).filter(m=>t>=m.at-m.warnMinutes*60000&&t<m.at+120000).sort((a,b)=>a.at-b.at)[0];if(!active){$('alert').classList.add('hidden');return}const before=active.at-t;$('alert').classList.remove('hidden');$('alertKicker').textContent=t<active.at?'UP NEXT':'NOW';$('alertTitle').textContent=t<active.at?`${active.name} begins in`:`${active.name} is starting now`;$('alertCount').textContent=t<active.at?(before<60000?`${Math.ceil(before/1000)}s`:fmt(before)):'LIVE';$('alertMessage').textContent=active.message||''}
 function renderAnnouncement(t){const a=schedule.announcements.find(x=>t>=Date.parse(x.showFrom)&&t<Date.parse(x.showUntil));if(!a){$('announcement').classList.add('hidden');return}$('announcement').textContent=a.text;$('announcement').classList.remove('hidden')}
