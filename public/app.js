@@ -126,135 +126,56 @@ function phaseLabel(p) {
 // ===============================
 
 function renderSchedule(t) {
-
-  if (!schedule ||
-      !Array.isArray(schedule.milestones)) {
-
-    $('scheduleList').innerHTML =
-      '<div class="item">' +
-      '<span class="item-name">' +
-      'No milestones yet' +
-      '</span>' +
-      '</div>';
-
+  if (!schedule || !Array.isArray(schedule.milestones)) {
+    $('scheduleList').innerHTML = '';
     return;
   }
-
 
   const items = schedule.milestones
     .map(m => ({
       ...m,
       at: milestoneAt(m)
     }))
-    .filter(m => Number.isFinite(m.at))
     .sort((a, b) => a.at - b.at);
 
+  // Find the first event that has NOT started yet
+  const next = items.find(m => t < m.at);
 
-  if (!items.length) {
-
-    $('scheduleList').innerHTML =
-      '<div class="item">' +
-      '<span class="item-name">' +
-      'No milestones yet' +
-      '</span>' +
-      '</div>';
-
+  // No upcoming events
+  if (!next) {
+    $('scheduleList').innerHTML = '';
+    $('scheduleList').parentElement.classList.add('hidden');
     return;
   }
 
+  // If the next event has become LIVE, hide the schedule.
+  if (t >= next.at) {
+    $('scheduleList').innerHTML = '';
+    $('scheduleList').parentElement.classList.add('hidden');
+    return;
+  }
 
-  let nextFound = false;
+  // Show the next upcoming event
+  $('scheduleList').parentElement.classList.remove('hidden');
 
+  const timeText = new Date(next.at).toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
 
-  $('scheduleList').innerHTML =
-    items.map((m, index) => {
+  $('scheduleList').innerHTML = `
+    <div class="item next">
+      <span class="dot"></span>
 
-      const startTime = m.at;
-      const endTime = m.at + 120000;
+      <span class="item-name">
+        ${esc(next.name)}
+      </span>
 
-      let status = '';
-      let statusClass = '';
-
-
-      if (t >= startTime && t < endTime) {
-
-        status = 'LIVE';
-        statusClass = 'live';
-
-      }
-
-      else if (t >= endTime) {
-
-        status = 'DONE';
-        statusClass = 'done';
-
-      }
-
-      else if (!nextFound) {
-
-        status = 'NEXT';
-        statusClass = 'next';
-
-        nextFound = true;
-
-      }
-
-      else {
-
-        status = 'UPCOMING';
-        statusClass = 'upcoming';
-
-      }
-
-
-      const timeText =
-        new Date(startTime).toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit'
-        });
-
-
-      const description =
-        m.description ||
-        m.message ||
-        'No additional information';
-
-
-      return `
-        <div class="item ${statusClass}">
-
-          <div class="milestone-left">
-            <span class="dot"></span>
-          </div>
-
-          <div class="milestone-content">
-
-            <div class="milestone-top">
-
-              <span class="item-name">
-                ${esc(m.name || `Round ${index + 1}`)}
-              </span>
-
-              <span class="item-time">
-                ${timeText}
-              </span>
-
-            </div>
-
-            <div class="milestone-description">
-              ${esc(description)}
-            </div>
-
-            <div class="milestone-status ${statusClass}">
-              ${status}
-            </div>
-
-          </div>
-
-        </div>
-      `;
-
-    }).join('');
+      <span class="item-time">
+        ${timeText}
+      </span>
+    </div>
+  `;
 }
 
 

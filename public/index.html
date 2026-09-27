@@ -1,1 +1,180 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#070815"><title>Event Countdown</title><link rel="stylesheet" href="/styles.css"></head><body class="phase-before"><div id="app"><video id="backdrop" class="backdrop" muted autoplay loop playsinline></video><div class="video-fallback"></div><canvas id="particles"></canvas><div class="vignette"></div><main class="stage"><header class="topbar"><div><div class="eyebrow" id="eventName">EVENT</div><div class="status" id="status">SYNCING</div></div><div class="live"><i></i> LIVE</div></header><section class="hero"><div class="phase-label" id="phaseLabel">GET READY</div><h1 id="timer">00:00:00</h1><div class="timer-sub" id="timerSub">Connecting to event clock…</div><div class="progress"><div id="progressBar"></div></div></section><section id="alert" class="alert hidden"><div class="alert-kicker" id="alertKicker">UP NEXT</div><div class="alert-title" id="alertTitle"></div><div class="alert-count" id="alertCount"></div><div class="alert-message" id="alertMessage"></div></section><aside class="schedule"><div class="schedule-title">SCHEDULE</div><div id="scheduleList"></div></aside><div id="announcement" class="announcement hidden"></div></main><div id="ended" class="ended hidden"><div class="burst"></div><div class="ended-kicker">EVENT COMPLETE</div><div class="ended-title">TIME'S UP!</div><div class="ended-sub" id="endedName"></div></div></div><script src="/videos/config.js"></script><script src="/app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,viewport-fit=cover"
+  >
+
+  <meta name="theme-color" content="#070815">
+
+  <title>Event Countdown</title>
+
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body class="phase-before">
+
+  <div id="app">
+
+    <!-- Background -->
+    <video
+      id="backdrop"
+      class="backdrop"
+      muted
+      autoplay
+      loop
+      playsinline
+    ></video>
+
+    <div class="video-fallback"></div>
+
+    <canvas id="particles"></canvas>
+
+    <div class="vignette"></div>
+
+
+    <!-- Main content -->
+    <main class="stage">
+
+      <!-- Top bar -->
+      <header class="topbar">
+
+        <div>
+          <div
+            class="eyebrow"
+            id="eventName"
+          >
+            HACK DAYS
+          </div>
+
+          <div
+            class="status"
+            id="status"
+          >
+            SYNCING
+          </div>
+        </div>
+
+        <div class="live">
+          <i></i>
+          LIVE
+        </div>
+
+      </header>
+
+
+      <!-- Milestone alert -->
+      <section
+        id="alert"
+        class="alert hidden"
+      >
+
+        <div
+          class="alert-kicker"
+          id="alertKicker"
+        >
+          UP NEXT
+        </div>
+
+        <div
+          class="alert-title"
+          id="alertTitle"
+        ></div>
+
+        <div
+          class="alert-count"
+          id="alertCount"
+        ></div>
+
+        <div
+          class="alert-message"
+          id="alertMessage"
+        ></div>
+
+      </section>
+
+
+      <!-- Countdown -->
+      <section class="hero">
+
+        <div
+          class="phase-label"
+          id="phaseLabel"
+        >
+          GET READY
+        </div>
+
+        <h1 id="timer">
+          00:00:00
+        </h1>
+
+        <div
+          class="timer-sub"
+          id="timerSub"
+        >
+          Connecting to event clock…
+        </div>
+
+        <div class="progress">
+          <div id="progressBar"></div>
+        </div>
+
+      </section>
+
+
+      <!-- Schedule -->
+      <aside class="schedule">
+
+        <div class="schedule-title">
+          SCHEDULE
+        </div>
+
+        <div id="scheduleList"></div>
+
+      </aside>
+
+
+      <!-- Announcement -->
+      <div
+        id="announcement"
+        class="announcement hidden"
+      ></div>
+
+    </main>
+
+
+    <!-- Event ended -->
+    <div
+      id="ended"
+      class="ended hidden"
+    >
+
+      <div class="burst"></div>
+
+      <div class="ended-kicker">
+        EVENT COMPLETE
+      </div>
+
+      <div class="ended-title">
+        TIME'S UP!
+      </div>
+
+      <div
+        class="ended-sub"
+        id="endedName"
+      ></div>
+
+    </div>
+
+  </div>
+
+
+  <script src="/videos/config.js"></script>
+  <script src="/app.js"></script>
+
+</body>
+
+</html>

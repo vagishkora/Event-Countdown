@@ -1,7 +1,7 @@
 {
   "eventName": "HACK DAYS",
-  "start": "2026-09-24T17:33:00.000Z",
-  "end": "2026-09-24T17:30:58.201Z",
+  "start": "2026-09-27T17:01:00.000Z",
+  "end": "2026-09-27T17:15:00.000Z",
   "milestones": [
     {
       "id": "m1",
@@ -22,8 +22,8 @@
       "message": "Upload your final build."
     },
     {
-      "id": "5e643930-9a35-4bee-85bf-5edd55ceccd4",
-      "name": "New milestone",
+      "id": "df6d2288-fb6b-4c59-89ac-71039e23310a",
+      "name": "zdgr",
       "type": "offset",
       "minutesAfterStart": 3,
       "exactAt": null,
@@ -32,6 +32,5 @@
     }
   ],
   "announcements": [],
-  "updatedAt": "2026-09-24T17:30:58.201Z",
-  "stoppedAt": "2026-09-24T17:30:58.201Z"
+  "updatedAt": "2026-09-27T17:06:35.985Z"
 }
