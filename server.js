@@ -415,14 +415,18 @@ app.put(
       normalized;
 
 
-    await fs.writeFile(
-      DATA_FILE,
-      JSON.stringify(
-        schedule,
-        null,
-        2
-      )
-    );
+    try {
+      await fs.writeFile(
+        DATA_FILE,
+        JSON.stringify(
+          schedule,
+          null,
+          2
+        )
+      );
+    } catch (err) {
+      console.warn('Could not save schedule to disk (read-only filesystem on Vercel):', err.message);
+    }
 
 
     res.json({
@@ -483,14 +487,18 @@ app.post(
     };
 
 
-    await fs.writeFile(
-      DATA_FILE,
-      JSON.stringify(
-        schedule,
-        null,
-        2
-      )
-    );
+    try {
+      await fs.writeFile(
+        DATA_FILE,
+        JSON.stringify(
+          schedule,
+          null,
+          2
+        )
+      );
+    } catch (err) {
+      console.warn('Could not save schedule to disk (read-only filesystem on Vercel):', err.message);
+    }
 
 
     res.json({
@@ -558,16 +566,20 @@ app.get(
 
 
 /* =========================================================
-   START SERVER
+   START SERVER & EXPORT FOR VERCEL
    ========================================================= */
 
-app.listen(
-  PORT,
-  () => {
+if (!process.env.VERCEL) {
+  app.listen(
+    PORT,
+    () => {
 
-    console.log(
-      `Event Countdown running on http://localhost:${PORT}`
-    );
+      console.log(
+        `Event Countdown running on http://localhost:${PORT}`
+      );
 
-  }
-);
+    }
+  );
+}
+
+export default app;
